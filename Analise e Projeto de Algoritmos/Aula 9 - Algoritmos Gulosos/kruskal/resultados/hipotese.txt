@@ -1,0 +1,25 @@
+Compilador: g++ 16.2.0 | C++ padrao 201703
+
+========================================================================
+HIPOTESE - por que o Union-Find ingenuo e lento no grafo aleatorio?
+========================================================================
+Hipotese: sem rank, a uniao pendura uma raiz na outra sem olhar o
+tamanho. A componente gigante acaba pendurada sob vertices isolados
+e ganha um nivel de profundidade a cada uniao; cada find precisa
+subir esses niveis. Tempos com instrumentacao (contadores ligados).
+
+Grafo aleatorio: n=20.000, m=200.000 (mesmo da OTIMIZACAO 1)
+variante                          tempo ms     finds   passos/find    altura  maior sob menor
+ingenuo (v sob u)                 1095.113    206474       1999.04      3707            36.9%
+ingenuo invertido (u sob v)       1032.591    206474       1876.16      3526            36.1%
+so uniao por rank                    1.714    206474          1.86         6             2.1%
+so compressao                        1.325    206474          2.23         3            36.9%
+otimizado (rank + compressao)        0.577    206474          0.95         2             2.1%
+
+Grafo estrela: n=20.000 (caso adverso da OTIMIZACAO 1)
+variante                          tempo ms     finds   passos/find    altura  maior sob menor
+ingenuo (v sob u)                  345.776     39998       4999.50     19999           100.0%
+ingenuo invertido (u sob v)          0.117     39998          0.00         1             0.0%
+so uniao por rank                    0.135     39998          0.50         1             0.0%
+so compressao                        0.169     39998          1.00     19998           100.0%
+otimizado (rank + compressao)        0.134     39998          0.50         1             0.0%

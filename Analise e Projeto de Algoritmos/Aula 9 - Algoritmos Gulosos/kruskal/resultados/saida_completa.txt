@@ -1,0 +1,183 @@
+Compilador: g++ 16.2.0 | C++ padrao 201703
+
+========================================================================
+TESTE 1 - Pequena instancia (passo a passo)
+========================================================================
+Entrada (ordem do arquivo):
+  A-B  peso 7
+  A-D  peso 5
+  B-C  peso 8
+  B-D  peso 9
+  B-E  peso 7
+  C-E  peso 5
+  D-E  peso 15
+  D-F  peso 6
+  E-F  peso 8
+  E-G  peso 9
+  F-G  peso 11
+
+Decisoes do algoritmo (arestas ja ordenadas por peso):
+Passo  Aresta           Peso  Decisao           Peso acumulado
+    1  A-D                 5  ACEITA                         5
+    2  C-E                 5  ACEITA                        10
+    3  D-F                 6  ACEITA                        16
+    4  A-B                 7  ACEITA                        23
+    5  B-E                 7  ACEITA                        30
+    6  B-C                 8  DESCARTA (ciclo)              30
+    7  E-F                 8  DESCARTA (ciclo)              30
+    8  B-D                 9  DESCARTA (ciclo)              30
+    9  E-G                 9  ACEITA                        39
+
+Arvore Geradora Minima:
+  A-D  (5)
+  C-E  (5)
+  D-F  (6)
+  A-B  (7)
+  B-E  (7)
+  E-G  (9)
+
+Vertices (n)                : 7
+Arestas (m)                 : 11
+Arestas na AGM              : 6
+Peso total da AGM           : 39
+Arestas examinadas          : 9 (81.8% do total)
+Arestas descartadas (ciclo) : 3
+Comparacoes na ordenacao    : 29
+Chamadas de find            : 18
+Tempo ordenacao             : 0.002 ms
+Tempo selecao gulosa        : 0.001 ms
+Tempo total                 : 0.003 ms
+Conferencia com Prim        : 39
+
+========================================================================
+TESTE 2 - Media instancia (n=1.000, m=10.000, seed=7)
+========================================================================
+Primeiras 20 decisoes:
+Passo  Aresta           Peso  Decisao           Peso acumulado
+    1  559-796             1  ACEITA                         1
+    2  697-766             1  ACEITA                         2
+    3  584-794             1  ACEITA                         3
+    4  135-163             1  ACEITA                         4
+    5  462-796             1  ACEITA                         5
+    6  526-858             1  ACEITA                         6
+    7  881-233             1  ACEITA                         7
+    8  588-102             1  ACEITA                         8
+    9  209-381             1  ACEITA                         9
+   10  806-183             2  ACEITA                        11
+   11  146-826             2  ACEITA                        13
+   12  899-115             2  ACEITA                        15
+   13  529-206             2  ACEITA                        17
+   14  915-102             2  ACEITA                        19
+   15  949-453             2  ACEITA                        21
+   16  350-944             2  ACEITA                        23
+   17  736-700             3  ACEITA                        26
+   18  980-973             3  ACEITA                        29
+   19  564-346             3  ACEITA                        32
+   20  816-843             3  ACEITA                        35
+  ... (3409 passos omitidos)
+
+Primeiros 5 descartes:
+  874-374 peso 51 (u e v ja estavam conectados)
+  65-770 peso 55 (u e v ja estavam conectados)
+  133-32 peso 56 (u e v ja estavam conectados)
+  167-485 peso 60 (u e v ja estavam conectados)
+  472-547 peso 60 (u e v ja estavam conectados)
+
+Total de decisoes: 3429 (999 aceitas, 2430 descartadas)
+Aresta mais pesada da AGM: 340 (peso maximo possivel: 1000)
+
+Vertices (n)                : 1000
+Arestas (m)                 : 10000
+Arestas na AGM              : 999
+Peso total da AGM           : 62325
+Arestas examinadas          : 3429 (34.3% do total)
+Arestas descartadas (ciclo) : 2430
+Comparacoes na ordenacao    : 123575
+Chamadas de find            : 6858
+Tempo ordenacao             : 0.402 ms
+Tempo selecao gulosa        : 0.090 ms
+Tempo total                 : 0.492 ms
+Conferencia com Prim        : 62325
+Tempo total (10 execucoes)  : mediana 0.428 ms | min 0.426 | max 0.454 | desvio 0.009 (10 execucoes)
+
+========================================================================
+TESTE 3 - Grande instancia (n=1.000.000, m=10.000.000, seed=2026)
+========================================================================
+Geracao do grafo: 2712 ms (nao entra na medicao)
+Vertices (n)                : 1000000
+Arestas (m)                 : 10000000
+Arestas na AGM              : 999999
+Peso total da AGM           : 60560622
+Arestas examinadas          : 6517008 (65.2% do total)
+Arestas descartadas (ciclo) : 5517009
+Comparacoes na ordenacao    : 223950078
+Chamadas de find            : 13034016
+Tempo ordenacao             : 551.090 ms
+Tempo selecao gulosa        : 53.643 ms
+Tempo total                 : 604.733 ms
+Ordenacao                   : mediana 551.090 ms | min 547.930 | max 567.738 | desvio 8.020 (5 execucoes)
+Selecao gulosa              : mediana 53.335 ms | min 53.121 | max 54.492 | desvio 0.554 (5 execucoes)
+Total                       : mediana 604.733 ms | min 601.051 | max 622.230 | desvio 8.532 (5 execucoes)
+Conferencia com Prim        : 60560622 (Prim levou 3280 ms)
+
+========================================================================
+VERIFICACAO - Kruskal x Prim em 1000 grafos aleatorios
+========================================================================
+Grafos testados: 1000 (500 com muitos pesos empatados) | falhas: 0
+Cada caso confere: mesmo peso total que o Prim, n-1 arestas,
+e todos os vertices alcancaveis pela arvore (logo, sem ciclos).
+Grafo desconexo detectado corretamente: O grafo nao e conexo: nao existe arvore geradora.
+Grafo com 1 vertice: peso 0, 0 arestas
+Todos os pesos iguais (n=4): peso 15 (esperado 15)
+
+========================================================================
+ESCALA - tempo x tamanho (grafos com m = 10n, mediana de 5 execucoes)
+========================================================================
+         n           m  ordenacao ms  selecao ms   total ms    ns/aresta  examinadas    % exam.
+      1000       10000         0.444       0.024      0.467        46.72        3629      36.3%
+     10000      100000         4.365       0.296      4.661        46.61       52637      52.6%
+    100000     1000000        45.406       4.376     49.783        49.78      798114      79.8%
+   1000000    10000000       558.958      54.252    613.017        61.30     6465592      64.7%
+
+========================================================================
+OTIMIZACAO 1 - Union-Find otimizado x ingenuo (caso adverso)
+========================================================================
+Grafo 'estrela': toda aresta liga ao vertice 0 e o peso cresce
+com o indice. Sem rank/compressao, a arvore do Union-Find vira
+uma lista e cada find percorre todos os vertices ja unidos.
+
+       n   selecao otimizada ms   selecao ingenua ms      razao
+    5000                  0.025               16.407       670x
+   10000                  0.063               65.861      1044x
+   20000                  0.138              259.446      1881x
+   40000                  0.260             1037.117      3986x
+
+Caso tipico: grafos aleatorios com m = 10n
+       n          m   selecao otimizada ms   selecao ingenua ms      razao
+    5000      50000                  0.148               32.712       222x
+   10000     100000                  0.302              151.664       502x
+   20000     200000                  0.592              961.250      1625x
+   40000     400000                  1.472             5043.097      3426x
+
+========================================================================
+OTIMIZACAO 2 - Parada antecipada (n=200.000, m=2.000.000)
+========================================================================
+  com parada: examinou  1208643 arestas, selecao 8.709 ms
+  sem parada: examinou  2000000 arestas, selecao 10.867 ms
+
+========================================================================
+OTIMIZACAO 3 - Merge Sort proprio x std::sort (m=2.000.000, so referencia)
+========================================================================
+  Merge Sort proprio: 99.117 ms (mediana)
+  std::sort (introsort): 60.009 ms (mediana)
+
+========================================================================
+DENSIDADE - mesmo n=2.000, numero de arestas crescente
+========================================================================
+         m  densidade   Kruskal ms    Prim ms   examinadas   % exam.
+      2000       0.1%        0.081      0.286         2000    100.0%
+     10000       0.5%        0.482      1.319         7759     77.6%
+     50000       2.5%        2.201      3.163         8652     17.3%
+    200000      10.0%        8.858      7.900         6657      3.3%
+   1000000      50.0%       45.569     34.000         8064      0.8%
+   1999000     100.0%       98.005     65.089         7166      0.4%
