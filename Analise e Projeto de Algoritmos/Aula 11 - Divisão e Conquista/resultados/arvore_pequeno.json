@@ -1,0 +1,23 @@
+[
+  {"id":0,"pai":-1,"prof":0,"inicio":0,"fim":11,"base":false,"entrada":["A-B(7)","A-D(5)","B-C(8)","B-D(9)","B-E(7)","C-E(5)","D-E(15)","D-F(6)","E-F(8)","E-G(9)","F-G(11)"],"saida":["A-D(5)","C-E(5)","D-F(6)","A-B(7)","B-E(7)","E-G(9)"],"descartadas":["B-C(8)","E-F(8)"]},
+  {"id":1,"pai":0,"prof":1,"inicio":0,"fim":5,"base":false,"entrada":["A-B(7)","A-D(5)","B-C(8)","B-D(9)","B-E(7)"],"saida":["A-D(5)","A-B(7)","B-E(7)","B-C(8)"],"descartadas":["B-D(9)"]},
+  {"id":2,"pai":1,"prof":2,"inicio":0,"fim":2,"base":false,"entrada":["A-B(7)","A-D(5)"],"saida":["A-D(5)","A-B(7)"],"descartadas":[]},
+  {"id":3,"pai":2,"prof":3,"inicio":0,"fim":1,"base":true,"entrada":["A-B(7)"],"saida":["A-B(7)"],"descartadas":[]},
+  {"id":4,"pai":2,"prof":3,"inicio":1,"fim":2,"base":true,"entrada":["A-D(5)"],"saida":["A-D(5)"],"descartadas":[]},
+  {"id":5,"pai":1,"prof":2,"inicio":2,"fim":5,"base":false,"entrada":["B-C(8)","B-D(9)","B-E(7)"],"saida":["B-E(7)","B-C(8)","B-D(9)"],"descartadas":[]},
+  {"id":6,"pai":5,"prof":3,"inicio":2,"fim":3,"base":true,"entrada":["B-C(8)"],"saida":["B-C(8)"],"descartadas":[]},
+  {"id":7,"pai":5,"prof":3,"inicio":3,"fim":5,"base":false,"entrada":["B-D(9)","B-E(7)"],"saida":["B-E(7)","B-D(9)"],"descartadas":[]},
+  {"id":8,"pai":7,"prof":4,"inicio":3,"fim":4,"base":true,"entrada":["B-D(9)"],"saida":["B-D(9)"],"descartadas":[]},
+  {"id":9,"pai":7,"prof":4,"inicio":4,"fim":5,"base":true,"entrada":["B-E(7)"],"saida":["B-E(7)"],"descartadas":[]},
+  {"id":10,"pai":0,"prof":1,"inicio":5,"fim":11,"base":false,"entrada":["C-E(5)","D-E(15)","D-F(6)","E-F(8)","E-G(9)","F-G(11)"],"saida":["C-E(5)","D-F(6)","E-F(8)","E-G(9)"],"descartadas":["D-E(15)"]},
+  {"id":11,"pai":10,"prof":2,"inicio":5,"fim":8,"base":false,"entrada":["C-E(5)","D-E(15)","D-F(6)"],"saida":["C-E(5)","D-F(6)","D-E(15)"],"descartadas":[]},
+  {"id":12,"pai":11,"prof":3,"inicio":5,"fim":6,"base":true,"entrada":["C-E(5)"],"saida":["C-E(5)"],"descartadas":[]},
+  {"id":13,"pai":11,"prof":3,"inicio":6,"fim":8,"base":false,"entrada":["D-E(15)","D-F(6)"],"saida":["D-F(6)","D-E(15)"],"descartadas":[]},
+  {"id":14,"pai":13,"prof":4,"inicio":6,"fim":7,"base":true,"entrada":["D-E(15)"],"saida":["D-E(15)"],"descartadas":[]},
+  {"id":15,"pai":13,"prof":4,"inicio":7,"fim":8,"base":true,"entrada":["D-F(6)"],"saida":["D-F(6)"],"descartadas":[]},
+  {"id":16,"pai":10,"prof":2,"inicio":8,"fim":11,"base":false,"entrada":["E-F(8)","E-G(9)","F-G(11)"],"saida":["E-F(8)","E-G(9)"],"descartadas":["F-G(11)"]},
+  {"id":17,"pai":16,"prof":3,"inicio":8,"fim":9,"base":true,"entrada":["E-F(8)"],"saida":["E-F(8)"],"descartadas":[]},
+  {"id":18,"pai":16,"prof":3,"inicio":9,"fim":11,"base":false,"entrada":["E-G(9)","F-G(11)"],"saida":["E-G(9)","F-G(11)"],"descartadas":[]},
+  {"id":19,"pai":18,"prof":4,"inicio":9,"fim":10,"base":true,"entrada":["E-G(9)"],"saida":["E-G(9)"],"descartadas":[]},
+  {"id":20,"pai":18,"prof":4,"inicio":10,"fim":11,"base":true,"entrada":["F-G(11)"],"saida":["F-G(11)"],"descartadas":[]}
+]

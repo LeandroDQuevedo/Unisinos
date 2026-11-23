@@ -1,0 +1,303 @@
+Compilador: g++ 13.3.0 | C++ padrao 201703
+
+============================================================================
+TESTE 1 - Pequena instancia (7 vertices, 11 arestas): passo a passo
+============================================================================
+Entrada (ordem do arquivo, posicoes 0 a 10):
+  [ 0] A-B(7)
+  [ 1] A-D(5)
+  [ 2] B-C(8)
+  [ 3] B-D(9)
+  [ 4] B-E(7)
+  [ 5] C-E(5)
+  [ 6] D-E(15)
+  [ 7] D-F(6)
+  [ 8] E-F(8)
+  [ 9] E-G(9)
+  [10] F-G(11)
+
+Sequencia das chamadas recursivas (recuo = profundidade):
+#0 [0,11) DIVIDE  entrada={A-B(7), A-D(5), B-C(8), B-D(9), B-E(7), C-E(5), D-E(15), D-F(6), E-F(8), E-G(9), F-G(11)}
+  #1 [0,5) DIVIDE  entrada={A-B(7), A-D(5), B-C(8), B-D(9), B-E(7)}
+    #2 [0,2) DIVIDE  entrada={A-B(7), A-D(5)}
+      #3 [0,1) CASO BASE  entrada={A-B(7)}
+      #4 [1,2) CASO BASE  entrada={A-D(5)}
+    #5 [2,5) DIVIDE  entrada={B-C(8), B-D(9), B-E(7)}
+      #6 [2,3) CASO BASE  entrada={B-C(8)}
+      #7 [3,5) DIVIDE  entrada={B-D(9), B-E(7)}
+        #8 [3,4) CASO BASE  entrada={B-D(9)}
+        #9 [4,5) CASO BASE  entrada={B-E(7)}
+  #10 [5,11) DIVIDE  entrada={C-E(5), D-E(15), D-F(6), E-F(8), E-G(9), F-G(11)}
+    #11 [5,8) DIVIDE  entrada={C-E(5), D-E(15), D-F(6)}
+      #12 [5,6) CASO BASE  entrada={C-E(5)}
+      #13 [6,8) DIVIDE  entrada={D-E(15), D-F(6)}
+        #14 [6,7) CASO BASE  entrada={D-E(15)}
+        #15 [7,8) CASO BASE  entrada={D-F(6)}
+    #16 [8,11) DIVIDE  entrada={E-F(8), E-G(9), F-G(11)}
+      #17 [8,9) CASO BASE  entrada={E-F(8)}
+      #18 [9,11) DIVIDE  entrada={E-G(9), F-G(11)}
+        #19 [9,10) CASO BASE  entrada={E-G(9)}
+        #20 [10,11) CASO BASE  entrada={F-G(11)}
+
+Retorno das solucoes e combinacoes (de baixo para cima):
+  #2 combina -> devolve {A-D(5), A-B(7)}
+  #7 combina -> devolve {B-E(7), B-D(9)}
+  #5 combina -> devolve {B-E(7), B-C(8), B-D(9)}
+  #1 combina -> devolve {A-D(5), A-B(7), B-E(7), B-C(8)}  | descarta {B-D(9)}
+  #13 combina -> devolve {D-F(6), D-E(15)}
+  #11 combina -> devolve {C-E(5), D-F(6), D-E(15)}
+  #18 combina -> devolve {E-G(9), F-G(11)}
+  #16 combina -> devolve {E-F(8), E-G(9)}  | descarta {F-G(11)}
+  #10 combina -> devolve {C-E(5), D-F(6), E-F(8), E-G(9)}  | descarta {D-E(15)}
+  #0 combina -> devolve {A-D(5), C-E(5), D-F(6), A-B(7), B-E(7), E-G(9)}  | descarta {B-C(8), E-F(8)}
+
+Arvore Geradora Minima (Divisao e Conquista): {A-D(5), C-E(5), D-F(6), A-B(7), B-E(7), E-G(9)}
+
+Vertices (n) / arestas (m)       : 7 / 11
+Arestas na AGM / peso total      : 6 / 39
+Divisoes realizadas              : 10
+Chamadas recursivas              : 21
+Casos base atingidos             : 11
+Profundidade da recursao         : 4 (teto de log2 m = 4)
+Arestas que entraram em combinacoes: 35
+Comparacoes de peso (intercalacao): 20
+Arestas descartadas (ciclo)      : 5
+Chamadas de find                 : 70
+Memoria auxiliar                 : 272 B
+
+Perfil por nivel da arvore de recursao:
+ nivel   chamadas  tam. do bloco  arestas combin.  arestas devolv.     % de m
+     0          1           11.0                8                6      72.7%
+     1          2            5.5               10                8      90.9%
+     2          4            2.8               11               10     100.0%
+     3          8            1.4                6               11      54.5%
+     4          6            0.7                0                6       0.0%
+
+Conferencia: Kruskal 39 | PD 39 | Kruskal+MergeSort recursivo 39 | Prim 39
+Mesmas arestas, na mesma ordem, que o Kruskal: sim
+Merge Sort recursivo: 21 chamadas, 10 divisoes, profundidade 4, 23 comparacoes
+
+============================================================================
+TESTE 2 - Media instancia (n=1.000, m=10.000, seed=7)
+============================================================================
+Vertices (n) / arestas (m)       : 1000 / 10000
+Arestas na AGM / peso total      : 999 / 62325
+Divisoes realizadas              : 9999
+Chamadas recursivas              : 19999
+Casos base atingidos             : 10000
+Profundidade da recursao         : 14 (teto de log2 m = 14)
+Arestas que entraram em combinacoes: 116754
+Comparacoes de peso (intercalacao): 103329
+Arestas descartadas (ciclo)      : 9001
+Chamadas de find                 : 233160
+Memoria auxiliar                 : 136.7 KB
+
+Perfil por nivel da arvore de recursao:
+ nivel   chamadas  tam. do bloco  arestas combin.  arestas devolv.     % de m
+     0          1        10000.0             1998              999      20.0%
+     1          2         5000.0             3970             1998      39.7%
+     2          4         2500.0             7289             3970      72.9%
+     3          8         1250.0             9885             7289      98.8%
+     4         16          625.0             9996             9885     100.0%
+     5         32          312.5            10000             9996     100.0%
+     6         64          156.2            10000            10000     100.0%
+     7        128           78.1            10000            10000     100.0%
+     8        256           39.1            10000            10000     100.0%
+     9        512           19.5            10000            10000     100.0%
+    10       1024            9.8            10000            10000     100.0%
+    11       2048            4.9            10000            10000     100.0%
+    12       4096            2.4            10000            10000     100.0%
+    13       8192            1.2             3616            10000      36.2%
+    14       3616            0.6                0             3616       0.0%
+
+Kruskal guloso (Aula 9): peso 62325, 3429 examinadas, 2430 descartadas, 123575 comparacoes, 6858 finds, memoria 242.2 KB
+Merge Sort recursivo: 19999 chamadas, 9999 divisoes, profundidade 14, 120350 comparacoes
+Mesmas arestas, na mesma ordem, que o Kruskal: sim
+
+Kruskal guloso - total            : mediana 0.850834 ms | min 0.807777 | max 1.039765 | desvio 0.072070 (10 exec.)
+  ordenacao (Merge Sort iterativo): mediana 0.804190 ms | min 0.745904 | max 0.992696 | desvio 0.072118 (10 exec.)
+  selecao gulosa                  : mediana 0.047691 ms | min 0.041844 | max 0.061873 | desvio 0.006183 (10 exec.)
+Kruskal + Merge Sort recursivo    : mediana 0.967299 ms | min 0.928335 | max 0.996854 | desvio 0.020498 (10 exec.)
+  ordenacao (Merge Sort recursivo): mediana 0.924359 ms | min 0.883854 | max 0.955371 | desvio 0.020600 (10 exec.)
+Divisao e Conquista nas arestas   : mediana 2.334212 ms | min 2.263716 | max 2.475052 | desvio 0.054928 (10 exec.)
+D&C com caso base de n arestas    : mediana 1.436850 ms | min 1.402340 | max 1.492169 | desvio 0.028123 (10 exec.)
+  (caso base de n arestas: 31 chamadas, 15 divisoes, profundidade 4, 106393 comparacoes, 65936 finds, peso 62325)
+Razao D&C / Kruskal: 2.74x | D&C (base n) / Kruskal: 1.69x | Merge recursivo / iterativo: 1.15x
+Conferencia com Prim: 62325
+
+============================================================================
+TESTE 3 - Grande instancia (n=1.000.000, m=10.000.000, seed=2026)
+============================================================================
+Geracao do grafo: 3154 ms (nao entra na medicao)
+Vertices (n) / arestas (m)       : 1000000 / 10000000
+Arestas na AGM / peso total      : 999999 / 60560622
+Divisoes realizadas              : 9999999
+Chamadas recursivas              : 19999999
+Casos base atingidos             : 10000000
+Profundidade da recursao         : 24 (teto de log2 m = 24)
+Arestas que entraram em combinacoes: 216346905
+Comparacoes de peso (intercalacao): 203179198
+Arestas descartadas (ciclo)      : 9000001
+Chamadas de find                 : 432688194
+Memoria auxiliar                 : 133.5 MB
+
+Perfil por nivel da arvore de recursao:
+ nivel   chamadas  tam. do bloco  arestas combin.  arestas devolv.     % de m
+     0          1     10000000.0          1999936           999999      20.0%
+     1          2      5000000.0          3973096          1999936      39.7%
+     2          4      2500000.0          7257620          3973096      72.6%
+     3          8      1250000.0          9893475          7257620      98.9%
+     4         16       625000.0          9999996          9893475     100.0%
+     5         32       312500.0          9999999          9999996     100.0%
+     6         64       156250.0          9999999          9999999     100.0%
+     7        128        78125.0         10000000          9999999     100.0%
+     8        256        39062.5         10000000         10000000     100.0%
+     9        512        19531.2         10000000         10000000     100.0%
+    10       1024         9765.6         10000000         10000000     100.0%
+    11       2048         4882.8         10000000         10000000     100.0%
+    12       4096         2441.4         10000000         10000000     100.0%
+    13       8192         1220.7         10000000         10000000     100.0%
+    14      16384          610.4         10000000         10000000     100.0%
+    15      32768          305.2         10000000         10000000     100.0%
+    16      65536          152.6         10000000         10000000     100.0%
+    17     131072           76.3         10000000         10000000     100.0%
+    18     262144           38.1         10000000         10000000     100.0%
+    19     524288           19.1         10000000         10000000     100.0%
+    20    1048576            9.5         10000000         10000000     100.0%
+    21    2097152            4.8         10000000         10000000     100.0%
+    22    4194304            2.4         10000000         10000000     100.0%
+    23    8388608            1.2          3222784         10000000      32.2%
+    24    3222784            0.6                0          3222784       0.0%
+
+Kruskal guloso (Aula 9): peso 60560622, 6517008 examinadas, 5517009 descartadas, 223950078 comparacoes, 13034016 finds, memoria 236.5 MB
+Merge Sort recursivo: 19999999 chamadas, 9999999 divisoes, profundidade 24, 220043521 comparacoes
+Mesmas arestas, na mesma ordem, que o Kruskal: sim
+
+Kruskal guloso - total            : mediana 1323.919154 ms | min 1267.747550 | max 1466.036989 | desvio 78.557955 (5 exec.)
+  ordenacao (Merge Sort iterativo): mediana 1225.362606 ms | min 1171.945613 | max 1335.742526 | desvio 65.784956 (5 exec.)
+  selecao gulosa                  : mediana 105.725065 ms | min 95.801937 | max 130.294463 | desvio 14.604289 (5 exec.)
+Kruskal + Merge Sort recursivo    : mediana 1459.419378 ms | min 1367.478799 | max 1500.672091 | desvio 50.091524 (5 exec.)
+  ordenacao (Merge Sort recursivo): mediana 1357.298096 ms | min 1248.943311 | max 1382.559233 | desvio 53.652142 (5 exec.)
+Divisao e Conquista nas arestas   : mediana 6591.498123 ms | min 6206.884057 | max 6878.773572 | desvio 241.437071 (5 exec.)
+D&C com caso base de n arestas    : mediana 2792.640224 ms | min 2684.734719 | max 2845.312549 | desvio 70.935823 (5 exec.)
+  (caso base de n arestas: 31 chamadas, 15 divisoes, profundidade 4, 207084356 comparacoes, 66242638 finds, peso 60560622)
+Razao D&C / Kruskal: 4.98x | D&C (base n) / Kruskal: 2.11x | Merge recursivo / iterativo: 1.11x
+Conferencia com Prim: 60560622 (Prim levou 4277 ms)
+
+============================================================================
+TRES PARADIGMAS - grafos da Aula 10 (7, 14 e 20 vertices)
+============================================================================
+
+Pequeno (arquivo): n=7, m=11
+  Peso: Kruskal 39 | PD 39 | D&C 39 | Kruskal+MS rec. 39
+  Kruskal : 9 arestas examinadas, 29 comparacoes | memoria 320 B
+  PD      : 127 estados, 276 transicoes, 844 consultas de peso | memoria 1.6 KB
+  D&C     : 21 chamadas, 10 divisoes, profundidade 4, 35 arestas combinadas, 20 comparacoes | memoria 272 B
+  Kruskal guloso                  : mediana 0.000342 ms | min 0.000254 | max 0.002005 | desvio 0.000631 (7 exec.)
+  Programacao Dinamica            : mediana 0.008740 ms | min 0.004459 | max 0.022853 | desvio 0.006995 (7 exec.)
+  Divisao e Conquista             : mediana 0.000652 ms | min 0.000514 | max 0.003731 | desvio 0.001167 (7 exec.)
+  Kruskal + Merge Sort recursivo  : mediana 0.000497 ms | min 0.000353 | max 0.001310 | desvio 0.000338 (7 exec.)
+
+Medio (seed 7): n=14, m=45
+  Peso: Kruskal 2519 | PD 2519 | D&C 2519 | Kruskal+MS rec. 2519
+  Kruskal : 14 arestas examinadas, 196 comparacoes | memoria 1.2 KB
+  PD      : 16383 estados, 83538 transicoes, 567188 consultas de peso | memoria 161.5 KB
+  D&C     : 89 chamadas, 44 divisoes, profundidade 6, 228 arestas combinadas, 148 comparacoes | memoria 820 B
+  Kruskal guloso                  : mediana 0.000727 ms | min 0.000712 | max 0.002882 | desvio 0.000816 (7 exec.)
+  Programacao Dinamica            : mediana 5.845753 ms | min 5.747337 | max 6.000752 | desvio 0.080077 (7 exec.)
+  Divisao e Conquista             : mediana 0.002948 ms | min 0.002734 | max 0.007486 | desvio 0.001732 (7 exec.)
+  Kruskal + Merge Sort recursivo  : mediana 0.001154 ms | min 0.001110 | max 0.003364 | desvio 0.000824 (7 exec.)
+
+Grande para PD (seed 2026): n=20, m=100
+  Peso: Kruskal 1621 | PD 1621 | D&C 1621 | Kruskal+MS rec. 1621
+  Kruskal : 24 arestas examinadas, 563 comparacoes | memoria 2.5 KB
+  PD      : 1048575 estados, 10231348 transicoes, 98044712 consultas de peso | memoria 10.0 MB
+  D&C     : 199 chamadas, 99 divisoes, profundidade 7, 577 arestas combinadas, 425 comparacoes | memoria 1.6 KB
+  Kruskal guloso                  : mediana 0.001797 ms | min 0.001570 | max 0.006443 | desvio 0.001852 (7 exec.)
+  Programacao Dinamica            : mediana 771.339884 ms | min 751.830979 | max 801.998624 | desvio 25.289485 (3 exec.)
+  Divisao e Conquista             : mediana 0.007062 ms | min 0.006499 | max 0.018743 | desvio 0.004413 (7 exec.)
+  Kruskal + Merge Sort recursivo  : mediana 0.002492 ms | min 0.002384 | max 0.007452 | desvio 0.001891 (7 exec.)
+
+============================================================================
+VERIFICACAO - D&C x Kruskal x Prim x PD em 1000 grafos aleatorios
+============================================================================
+Grafos testados: 1000 (500 com muitos pesos empatados) | falhas: 0
+Conferidos tambem com a PD (n <= 12): 138
+D&C devolveu exatamente as mesmas arestas do Kruskal, na mesma ordem: 1000 de 1000
+Cada caso confere: mesmo peso de Kruskal e Prim, n-1 arestas, todos os
+vertices alcancaveis, m-1 divisoes e 2m-1 chamadas; variantes com caso
+base ampliado (16 ou n arestas) e paralela (2 tarefas) com o mesmo peso.
+Grafo desconexo detectado corretamente: O grafo nao e conexo: nao existe arvore geradora.
+Grafo com 1 vertice: peso 0, 0 arestas, 1 chamada(s)
+Todos os pesos iguais (n=4): peso 15 (esperado 15)
+Pesos negativos (n=4): peso -9 (esperado -9)
+Arestas paralelas (n=3): peso 3 (esperado 3)
+
+============================================================================
+ESCALA - tempo x tamanho (grafos com m = 10n, mediana de 5 execucoes)
+============================================================================
+        n          m |  Kruskal ms Kr+MSrec ms      D&C ms   D&C base n |  ns/a Kr  ns/a MS  ns/a DC ns/a DCn |   DC/Kr   DCn/Kr
+     1000      10000 |       0.825       0.959       2.374        1.435 |     82.5     95.9    237.4    143.5 |   2.88x    1.74x
+    10000     100000 |      10.477      11.165      31.411       19.719 |    104.8    111.7    314.1    197.2 |   3.00x    1.88x
+   100000    1000000 |      98.428     114.779     383.832      192.186 |     98.4    114.8    383.8    192.2 |   3.90x    1.95x
+  1000000   10000000 |    1266.582    1331.802    6312.683     2789.466 |    126.7    133.2    631.3    278.9 |   4.98x    2.20x
+
+============================================================================
+DENSIDADE - mesmo n=2.000, numero de arestas crescente (mediana de 5)
+============================================================================
+        m  densid. | Kruskal ms     D&C ms  D&C base n   Prim ms |   compar. Kr.   compar. D&C |   DC/Kr   DCn/Kr
+     2000     0.1% |      0.166      0.393       0.175     0.358 |         19423         19402 |   2.37x    1.06x
+    10000     0.5% |      0.885      2.447       1.423     1.825 |        123580        111547 |   2.76x    1.61x
+    50000     2.5% |      4.204     12.496       7.237     4.072 |        733151        573075 |   2.97x    1.72x
+   200000    10.0% |     17.315     49.711      28.891    13.065 |       3332595       2303508 |   2.87x    1.67x
+  1000000    50.0% |     91.424    251.083     136.538    44.971 |      18712137      11518473 |   2.75x    1.49x
+  1999000   100.0% |    192.330    513.562     280.194    95.318 |      39407859      23026869 |   2.67x    1.46x
+
+============================================================================
+OTIMIZACAO 1 - Caso base ampliado (Kruskal local em blocos de ate L arestas)
+============================================================================
+
+Grafo esparso: n=200.000, m=2.000.000 (seed 99)
+Kruskal guloso de referencia: 197.990 ms
+ limite base     chamadas profund.    comparacoes          finds     D&C ms  D&C/Kruskal
+           1      3999999       21       35963888       77052488    876.593        4.43x
+          16       262143       17       30365701       65246792    773.287        3.91x
+          64        65535       15       35984011       57246792    736.982        3.72x
+       12500          511        8       36042650       29246792    562.060        2.84x
+       50000          127        6       36048152       21246792    489.359        2.47x
+      200000           31        4       36048695       13246796    396.636        2.00x
+      800000            7        2       36618532        6387416    260.768        1.32x
+
+Grafo completo: n=2.000, m=1.999.000 (o mesmo do teste DENSIDADE)
+Kruskal guloso de referencia: 187.392 ms
+ limite base     chamadas profund.    comparacoes          finds     D&C ms  D&C/Kruskal
+           1      3997999       21       23026869       51164372    493.321        2.63x
+          16       262143       17       17432828       39366676    412.269        2.20x
+          64        65535       15       23047295       31370676    401.340        2.14x
+         125        32767       14       23059340       27372678    385.909        2.06x
+         500         8191       12       23077888       19376734    351.159        1.87x
+        2000         2047       10       23087294       11384372    275.597        1.47x
+        8000          511        8       24399139        5995568    199.298        1.06x
+
+Grande instancia: n=1.000.000, m=10.000.000 (seed 2026)
+Kruskal guloso de referencia: 1284.846 ms
+ limite base     chamadas profund.    comparacoes          finds     D&C ms  D&C/Kruskal
+           1     19999999       24      203179198      432688194   6352.882        4.94x
+          16      2097151       20      181112599      386242626   5695.997        4.43x
+          64       524287       18      205906417      346242626   5965.242        4.64x
+       62500          511        8      207079749      146242626   4179.218        3.25x
+      250000          127        6      207083093      106242628   3549.559        2.76x
+     1000000           31        4      207084356       66242638   2737.562        2.13x
+     4000000            7        2      209929310       31940448   1682.099        1.31x
+
+============================================================================
+OTIMIZACAO 2 - Subproblemas em paralelo (n=200.000, m=2.000.000, mediana de 5)
+============================================================================
+Nucleos disponiveis nesta maquina: 2
+ limite base   niveis paralelos    tarefas     D&C ms   aceleracao
+           1                  0          1    833.046        1.00x   (peso 12125529)
+           1                  1          2    436.767        1.91x   (peso 12125529)
+           1                  2          4    442.413        1.88x   (peso 12125529)
+      200000                  0          1    386.347        1.00x   (peso 12125529)
+      200000                  1          2    209.069        1.85x   (peso 12125529)
+      200000                  2          4    224.491        1.72x   (peso 12125529)
